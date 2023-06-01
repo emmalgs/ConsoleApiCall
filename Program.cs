@@ -25,8 +25,20 @@ namespace ApiTest
         Console.WriteLine($"Url: {article.Url}");
         Console.WriteLine($"Byline: {article.Byline}");
         Console.WriteLine($"Item_Type: {article.Item_Type}");
-        Console.WriteLine("------------------------");
+        if (article.Multimedia != null)
+        {
+          foreach (Multimedia media in article.Multimedia)
+          {
+          Console.WriteLine("------------");
+          Console.WriteLine("---------");
+          Console.WriteLine($"MULTIMEDIA");
+          Console.WriteLine($"Type: {media.Type}");
+          Console.WriteLine($"SubType: {media.SubType}");
+          Console.WriteLine($"Caption: {media.Caption}");
+          }
+        }
       }
+      Console.WriteLine("__________________________________");
     }
   }
 
@@ -34,7 +46,7 @@ namespace ApiTest
   {
     public static async Task<string> ApiCall(string apiKey)
     {
-        RestClient client = new RestClient("https://api.nytimes.com/svc/topstories/v2");
+      RestClient client = new RestClient("https://api.nytimes.com/svc/topstories/v2");
       RestRequest request = new RestRequest($"home.json?api-key={apiKey}", Method.Get);
       RestResponse response = await client.ExecuteAsync(request);
       return response.Content;
